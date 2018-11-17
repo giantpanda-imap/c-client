@@ -373,10 +373,8 @@ OSDEPS= mail.h misc.h env.h fs.h ftl.h nl.h tcp.h \
 	krb.c \
 	auth_ext.c auth_gss.c auth_log.c auth_md5.c auth_ntl.c auth_pla.c \
 	pmatch.c scandir.c setpgrp.c strerror.c truncate.c write.c \
-	memmove.c memmove2.c memset.c \
 	tz_bsd.c tz_nul.c tz_sv4.c \
 	write.c sslstdio.c \
-	strerror.c strpbrk.c strstr.c strtok.c strtoul.c \
 	OSCFLAGS
 
 osdep.o:	$(OSDEPS)
