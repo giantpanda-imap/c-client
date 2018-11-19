@@ -45,6 +45,10 @@
 #define utime portable_utime
 int portable_utime(char *file, time_t timep[2]);
 
+#if __DARWIN_UNIX03
+#define setpgrp setpgid
+#endif
+
 #include "env_unix.h"
 #include "fs.h"
 #include "ftl.h"
