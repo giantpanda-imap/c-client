@@ -1157,7 +1157,7 @@ long mail_create(MAILSTREAM *stream, char *mailbox)
             MM_LOG(tmp, ERROR);
             return NIL;
         }
-        
+
         for (d = maildrivers; d && strcmp(d->name, tmp); d = d->next);
 
         if (d)
@@ -2223,7 +2223,12 @@ char *mail_fetch_body(MAILSTREAM *stream, unsigned long msgno, char *section,
     if (!(section && *section)) /* top-level text wanted? */
         return mail_fetch_message(stream, msgno, len, flags);
     else if (strlen(section) > (MAILTMPLEN - 20))
+    {
+        if (len)
+            *len = 0;
         return "";
+    }
+
     flags &= ~FT_INTERNAL; /* can't win with this set */
     /* initialize message data identifier */
     INIT_GETS(md, stream, msgno, section, 0, 0);
@@ -3002,7 +3007,7 @@ long mail_append_multiple(MAILSTREAM *stream, char *mailbox, append_t af,
     }
     else if ((d = mail_valid(stream, mailbox, NIL)) != NULL)
         ret = SAFE_APPEND(d, stream, mailbox, af, data);
-  /* No driver, try for TRYCREATE if no stream.  Note that we use the
+    /* No driver, try for TRYCREATE if no stream.  Note that we use the
    * createProto here, not the appendProto, since the dummy driver already
    * took care of the appendProto case.  Otherwise, if appendProto is set to
    * NIL, we won't get a TRYCREATE.
