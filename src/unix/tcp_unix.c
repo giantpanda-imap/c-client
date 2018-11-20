@@ -308,16 +308,15 @@ int tcp_socket_open(int family, void *adr, size_t adrlen, unsigned short port,
             now = time(0); /* open timeout */
             ti = ttmo_open ? now + ttmo_open : 0;
             pfd.fd = sock;
-            pfd.events = POLLIN | POLLOUT do
+            pfd.events = POLLIN | POLLOUT;
+            do
             { /* block under timeout */
                 tmo = ti ? ti - now : 0;
                 i = poll(&pfd, 1, ti ? tmo * 1000 : -1);
                 now = time(0); /* fake timeout if interrupt & time expired */
                 if ((i < 0) && (errno == EINTR) && ti && (ti <= now))
                     i = 0;
-            }
-            while ((i < 0) && (errno == EINTR))
-                ;
+            } while ((i < 0) && (errno == EINTR));
             if (i > 0)
             { /* success, make sure really connected */
                 /* restore blocking status */

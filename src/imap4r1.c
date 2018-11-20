@@ -3666,7 +3666,7 @@ IMAPPARSEDREPLY *imap_send(MAILSTREAM *stream, char *cmd, IMAPARG *args[])
                 break;
             case QSTRING: /* atom or string, must be literal? */
                 st.size = strlen((char *)(st.data = (unsigned char *)arg->text));
-                if (reply = imap_send_qstring(stream, tag, &s, &st, CMDBASEMAXCOMMAND))
+                if ((reply = imap_send_qstring(stream, tag, &s, &st, MAXCOMMAND)) != NULL)
                     return reply;
                 break;
             case LITERAL: /* literal, as a stringstruct */
@@ -3693,7 +3693,7 @@ IMAPPARSEDREPLY *imap_send(MAILSTREAM *stream, char *cmd, IMAPARG *args[])
                 do
                 {             /* for each list item */
                     *s++ = c; /* write prefix character */
-                    if (reply = imap_send_qstring(stream, tag, &s, &list->text,
+                    if ((reply = imap_send_qstring(stream, tag, &s, &list->text,
                                                   CMDBASE + MAXCOMMAND)) != NULL) return reply;
                     c = ' '; /* prefix character for subsequent strings */
                 } while ((list = list->next) != NULL);

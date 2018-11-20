@@ -1273,8 +1273,6 @@ void *maildir_parameters(long function, void *value)
             strcpy(myMdInboxDir, "Maildir");
         ret = (void *)myMdInboxDir;
         break;
-    case SET_COURIERSTYLE:
-        CourierStyle = (long)value;
     case GET_COURIERSTYLE:
         ret = (void *)CourierStyle;
         break;
