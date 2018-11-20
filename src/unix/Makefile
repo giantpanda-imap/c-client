@@ -316,7 +316,7 @@ $(ARCHIVE): $(BINARIES)
 
 $(SHLIBNAME):	$(SOFILES)
 	$(CC) -shared -Wl,-soname,$(SHLIBNAME) -o $(SHLIBNAME) $(SOFILES) `cat LDFLAGS`
-	ln -s $(SHLIBNAME) libc-client.so
+	$(LN) $(SHLIBNAME) libc-client.so
  
 .c.so:	osdep.h
 	$(CC) -fPIC -DPIC -D_REENTRANT -c `$(CAT) CFLAGS` ${@:.so=.c} -o $@
@@ -449,7 +449,7 @@ onceenv:
 	$(LN) crx_$(CRXTYPE).c crexcl.c
 	$(LN) ip$(IP)_unix.c ip_unix.c
 	sh -c '(test $(OS) = sc5 -o $(OS) = sco -o ! -f /usr/include/sys/statvfs.h) && echo -DNOFSTATVFS >> OSCFLAGS || fgrep statvfs64 /usr/include/sys/statvfs.h > /dev/null || echo -DNOFSTATVFS64 >> OSCFLAGS'
-	echo "libc-client.so.`grep CCLIENTVERSION mail.h | sed -e's/[^"]\{1,\}"\([0-9]\{1,\}\)"/\1/'`" > SHLIBNAME
+	echo "libc-client.so.`grep CCLIENTVERSION mail.h | cut -d'"' -f2`" > SHLIBNAME
 	test -z $(SHLIBFLAGS) && echo "-fPIC -DPIC -D_REENTRANT" > SHLIBFLAGS || echo "$(SHLIBFLAGS)" > SHLIBFLAGS
 
 
