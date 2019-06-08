@@ -487,8 +487,8 @@ clean:
 	$(CD) tools;$(MAKE) clean
 
 install: all
-	ginstall -D c-client/libc-client.so* $(DESTDIR)/usr/lib/
-	ginstall -D c-client/c-client.a $(DESTDIR)/usr/lib/libc-client.a
+	install -D c-client/libc-client.so* $(DESTDIR)/usr/lib/
+	install -D c-client/c-client.a $(DESTDIR)/usr/lib/libc-client.a
 	install -v -d $(DESTDIR)/usr/include/imap
 	install -v -m 644 ./c-client/*.h $(DESTDIR)/usr/include/imap
 	install -v -m 644 ./c-client/linkage.c $(DESTDIR)/usr/include/imap
